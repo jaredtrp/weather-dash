@@ -36,15 +36,14 @@ main {
     display: flex;
 }
 
-#container-left {
+.search-section {
     flex-grow: 1;
-    width: 30%;
     padding: 20px;
     width: 20%;
     min-width: 400px;
 }
 
-#container-right {
+.weather-section {
     flex-grow: 1;
     padding: 20px;
     width: 80%;
@@ -55,6 +54,7 @@ main {
     border-radius: 3px;
     padding: 10px;
     color: #dbdbdb;
+    width: 100%;
 }
 
 #search-button {
