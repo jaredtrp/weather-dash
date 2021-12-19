@@ -6,6 +6,8 @@ const cityHeroEl = document.querySelector('#city-hero');
 const forecastEl = document.querySelector('#forecast');
 
 let city = '';
+let cityValue = [];
+let currentWeather = '';
 
 searchButtonEl.addEventListener('click', function searchedCity(event) {
 	event.preventDefault();
@@ -31,8 +33,8 @@ let getRequestedWeather = function (){
     })
     .then(function(data) {
         console.log(data);
-        // var cityValue = data['location']['name'];
-        // var stateValue = data['location']['region'];
+        var cityValue = data.list[0];
+        console.log(cityValue);
         // var tempValue = data['current']['temp_f'];
         // var condValue = data['current']['condition']['text'];
     });
