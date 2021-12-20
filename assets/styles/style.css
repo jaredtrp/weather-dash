@@ -67,3 +67,12 @@ main {
     padding: 10px;
     margin: 10px 0px;
 }
+
+#city-hero {
+    padding: 20px;
+}
+
+.forecast-card {
+    background-color: #2d3e50;
+    padding: 10px;
+}
