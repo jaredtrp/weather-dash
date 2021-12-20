@@ -3,6 +3,7 @@ const containerRightEl = document.querySelector('#container-right');
 const input = document.querySelector('#search-form');
 const searchButtonEl = document.querySelector('#search-button');
 const cityHeroEl = document.querySelector('#city-hero');
+const forecastTitleEl = document.querySelector('#forecast-title');
 const forecastEl = document.querySelector('#forecast');
 
 let today = new Date();
@@ -85,47 +86,56 @@ let getRequestedWeather = function (){
     .then(function(data) {
         console.log(data);
 
-        let cityForecastValue = data.city.name;
-        let tempValue = data.list[0].main.temp;
-        let humiValue = data.list[0].main.humidity;
-        let windValue = data.list[0].wind.speed;
-
-        console.log(cityForecastValue);
-        console.log(tempValue);
-        console.log(humiValue);
-        console.log(windValue);
-
         displayForecastWeather();
         function displayForecastWeather() {
-            
             let forecastTitle = document.createElement('h2');
             forecastTitle.id = 'forecastTitle';
             forecastTitle.textContent = '5-Day Forecast:';
-            forecastEl.appendChild(forecastTitle);
+            forecastTitleEl.appendChild(forecastTitle);
+            
+            console.log(data.list[0].dt_txt);
 
+            let originalDate = data.list[0].dt_txt;
+            let splitDate = originalDate.split('-');
+            let splitDay = splitDate[2].split(' ');
+            let convertedDate = `${splitDate[1]}/${splitDay[0]}/${splitDate[0]}`;            
+
+            let tempValue = [data.list[0].main.temp, data.list[8].main.temp, data.list[16].main.temp, data.list[24].main.temp, data.list[32].main.temp];
+            let humiValue = [data.list[0].main.humidity, data.list[8].main.humidity, data.list[16].main.humidity, data.list[24].main.humidity, data.list[32].main.humidity];
+            let windValue = [data.list[0].wind.speed, data.list[8].wind.speed, data.list[16].wind.speed, data.list[24].wind.speed, data.list[32].wind.speed];
+
+            console.log(tempValue[0]);
+            console.log(humiValue);
+            console.log(windValue);
+            
+            for(i = 0; i < 5; i++) {
+            // Forecast Day 1
             let forecastCard = document.createElement('div');
-            forecastCard.id = 'forecast-card';
+            forecastCard.classList = 'forecast-card';
+            forecastCard.id = 'forecastBackground'
             forecastEl.appendChild(forecastCard);
             
-            let cityText = document.createElement('h1');
-            cityText.id = 'cityText';
-            cityText.textContent = `${cityForecastValue} (${currentDate})`;
-            forecastEl.appendChild(cityText);
+            let dateText = document.createElement('h3');
+            dateText.id = 'dateText';
+            let number = 1;
+            dateText.textContent = convertedDate;
+            forecastCard.appendChild(dateText);
 
             let tempText = document.createElement('p');
             tempText.id = 'tempText';
-            tempText.textContent = `Temp: ${tempValue}°F`;
-            forecastEl.appendChild(tempText);
+            tempText.textContent = `Temp: ${tempValue[i]}°F`;
+            forecastCard.appendChild(tempText);
 
             let windText = document.createElement('p');
             windText.id = 'windText';
-            windText.textContent = `Wind: ${windValue}MPH`;
-            forecastEl.appendChild(windText);
+            windText.textContent = `Wind: ${windValue[i]}MPH`;
+            forecastCard.appendChild(windText);
 
             let humiText = document.createElement('p');
             humiText.id = 'humiText';
-            humiText.textContent = `Humidity: ${humiValue}%`;
-            forecastEl.appendChild(humiText);
+            humiText.textContent = `Humidity: ${humiValue[i]}%`;
+            forecastCard.appendChild(humiText);
+            }
         }
     });
 };

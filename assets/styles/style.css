@@ -28,6 +28,14 @@ h1 {
     margin: 0px;
 }
 
+h2 {
+    margin: 0px;
+}
+
+h3 {
+    margin: 0px;
+}
+
 .page-title {
     color: #ffffff;
 }
@@ -72,7 +80,18 @@ main {
     padding: 20px;
 }
 
+.forecast-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .forecast-card {
     background-color: #2d3e50;
     padding: 10px;
+    color: #ffffff;
+    margin: 10;
+    width: 100%;
+    max-width: 150px;
+    flex-grow: 1;
 }
