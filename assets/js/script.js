@@ -10,20 +10,15 @@ let today = new Date();
 let currentDay = today.getDate();
 let currentMonth = today.getMonth() + 1;
 let currentYear = today.getFullYear();
-let currentDate = `${currentMonth}/${currentDay}/${currentYear}`
-// let cityCurrentValue = [];
-// let cityForecastValue = [];
+let currentDate = `${currentMonth}/${currentDay}/${currentYear}`;
+
 
 // Function to gather input from search
 searchButtonEl.addEventListener('click', function searchedCity(event) {
 	event.preventDefault();
 	city = document.querySelector("input[name='search']").value;
     console.log(city);
-	// check if inputs are empty (validate)
-	// if (city = '') {
-	// 	alert("You must enter a city!");
-	// 	return false;
-	// } else {
+
     getRequestedWeather();
 	// reset form field for next city to be entered
 	document.querySelector("input[name='search']").value = "";
@@ -94,12 +89,20 @@ let getRequestedWeather = function (){
             forecastTitleEl.appendChild(forecastTitle);
             
             console.log(data.list[0].dt_txt);
-
-            let originalDate = data.list[0].dt_txt;
-            let splitDate = originalDate.split('-');
-            let splitDay = splitDate[2].split(' ');
-            let convertedDate = `${splitDate[1]}/${splitDay[0]}/${splitDate[0]}`;            
-
+            
+            let finalDate = [];
+            
+            // For loop to convert the date for each day
+            let n = 0;
+            for(i = 0; i < 5; i++) {
+                let originalDate = data.list[n].dt_txt;
+                let splitDate = originalDate.split('-');
+                let splitDay = splitDate[2].split(' ');
+                let convertedDate = `${splitDate[1]}/${splitDay[0]}/${splitDate[0]}`;
+                finalDate.push(convertedDate);
+                n = n + 8;
+            }
+         
             let tempValue = [data.list[0].main.temp, data.list[8].main.temp, data.list[16].main.temp, data.list[24].main.temp, data.list[32].main.temp];
             let humiValue = [data.list[0].main.humidity, data.list[8].main.humidity, data.list[16].main.humidity, data.list[24].main.humidity, data.list[32].main.humidity];
             let windValue = [data.list[0].wind.speed, data.list[8].wind.speed, data.list[16].wind.speed, data.list[24].wind.speed, data.list[32].wind.speed];
@@ -117,8 +120,7 @@ let getRequestedWeather = function (){
             
             let dateText = document.createElement('h3');
             dateText.id = 'dateText';
-            let number = 1;
-            dateText.textContent = convertedDate;
+            dateText.textContent = finalDate[i];
             forecastCard.appendChild(dateText);
 
             let tempText = document.createElement('p');
